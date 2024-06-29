@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        caption {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <caption>Keyboard Events</caption>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Keycode</th>
+                <th>Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- append here  -->
+        </tbody>
+    </table>
+
+    <script>
+            window.addEventListener('keydown', function(event) {
+            const tableBody = document.querySelector('tbody');
+            const tableRow = document.createElement('tr');
+
+            const keyCell = document.createElement('td');
+            if(event.key == ' '){
+                keyCell.textContent = 'space';
+            }
+            else{
+                keyCell.textContent = event.key;
+            }
+            tableRow.appendChild(keyCell);
+
+            const keyCodeCell = document.createElement('td');
+            keyCodeCell.textContent = event.keyCode;
+            tableRow.appendChild(keyCodeCell);
+
+            const codeCell = document.createElement('td');
+            codeCell.textContent = event.code;
+            tableRow.appendChild(codeCell);
+
+            tableBody.appendChild(tableRow);
+            });
+    </script>
+</body>
+</html>

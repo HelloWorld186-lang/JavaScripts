@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector</title>
+</head>
+<body style="background-color: rgb(46, 46, 46);color: lightblue;"> 
+
+    <h1 id="title" class="heading">DOM Learning</h1>
+    <p style="color: whitesmoke;">Means Document object manupulation</p>
+    <div style="color: lightcoral;">Today , I am learing dom.</div>
+
+    <!-- css selector 
+        //this is the css selector which is use with dom 
+        :first-child , :last-child , :nth-child(2) , :nth-child(odd) , :nth-child(even) , :nth-child(n + 2) , :nth-child(2n) , :nth-child(2n + 2) , :nth-child(2n - 2)
+      -->
+
+    <script>
+        //Learned from documations
+        //i this we learn basic slector all type of selector and there working 
+        //getelementbyid give the element directly //getelementbyclassname give the element in the htmlcollection form (whcih is similar as array , but not have any loop property) , queryselector give the first element , queryselectorall give the element in form of nodelist 
+        /*
+            document.getElementId('name of id').(className / id / getAttribute('name of the attribute')/setAttribute('jiska attribute change karana hai' , 'valie of that attribute'))
+            //example for the document.getElementId('name of id').setAttribute('class' , 'text') //now the heading is gone to replace by the text
+
+            //style
+            //document.getElementId('name of id').style.backgroundcolor = 'red'
+
+            //text content 
+            //inner html
+            // inner text
+            //all above three give the same value 
+            //differnce between them are 
+            //between inner text and  text content //in innertext on the display (true) content is gone to show //but in the text connent give the all text either it is display true or none
+            //innerhtml give the inside all things either it is simple text or the html code 
+
+            //getelementbyclassname same as id 
+
+            //important quarray selector are :-
+            //1. document.querryselector('h1 tage') //this will give the first h1 only 
+            //  document.querryselector('#id') 
+            //  document.querryselector('.class') 
+            // document.querryselector('input[attribute = attribute value]') 
+
+            //2. document.querryselectorall(' ') //same as above but it give the all in the formate of ndoelist (which is not the actuale array , similar as the array)  //but the above gove only the first element 
+            //in nodelist we not have the map loop but we have the foreach loop
+
+            //htmlcollecttion (get we use the getelementbyclassname) is same as array but it not give any for loop or map , so first convert it into the array Array.from(htmlcollection)
+
+        */
+
+    </script>
+    
+</body>
+</html>

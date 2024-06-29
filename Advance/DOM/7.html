@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #message {
+            margin-bottom: 10px;
+            color: #d9534f;
+        }
+
+        #attemptsRemaining {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        #remainingCount {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Guess the Number</h2>
+        <p>Guess the number between 1 and 100</p>
+        <p>You have only 10 attempts</p>
+        <form id="guessForm">
+            <label for="guessInput" style="display: none;">Enter your guess</label>
+            <input type="number" id="guessInput" name="guessInput" min="1" max="100" required style="display: none;">
+            <button type="submit" id="submit">Play Game</button>
+        </form>
+        <div id="message"></div>
+        <div id="attemptsRemaining" style="display: none;">Attempts remaining: <span id="remainingCount">10</span></div>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100 + 1);
+        const submit = document.querySelector('#submit');
+        const label = document.querySelector('label');
+        const input = document.querySelector('input');
+        const message = document.querySelector('#message');
+        const attemptsRemaining = document.querySelector('#attemptsRemaining');
+        const remainingCount = document.querySelector('#remainingCount');
+
+        let playGame = false;
+        let numberAttempt = 10;
+
+        submit.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!playGame) {
+                playGame = true;
+                label.style.display = 'block';
+                input.style.display = 'block';
+                attemptsRemaining.style.display = 'block';
+                submit.textContent = 'Submit';
+                message.textContent = '';
+                numberAttempt = 10;
+                remainingCount.textContent = numberAttempt;
+            } else {
+                const newGuess = parseInt(input.value);
+                isValidFunction(newGuess);
+            }
+        });
+
+        function isValidFunction(newGuess) {
+            if (isNaN(newGuess)) {
+                message.textContent = 'Please enter a number.';
+            } else if (newGuess > 100 || newGuess < 1) {
+                message.textContent = 'Please enter a number between 1 and 100.';
+            } else {
+                playFunction(newGuess);
+            }
+        }
+
+        function playFunction(newGuess) {
+            numberAttempt--;
+            remainingCount.textContent = numberAttempt;
+
+            if (newGuess < randomNumber) {
+                message.textContent = 'Your guess is too low.';
+            } else if (newGuess > randomNumber) {
+                message.textContent = 'Your guess is too high.';
+            } else {
+                message.textContent = 'Congratulations! You guessed the number.';
+                setTimeout(restartGame, 1500);
+                return;
+            }
+
+            if (numberAttempt === 0) {
+                message.textContent = `Game over! The number was ${randomNumber}.`;
+                setTimeout(restartGame, 1500);
+            }
+        }
+
+        function restartGame() {
+            playGame = false;
+            label.style.display = 'none';
+            input.style.display = 'none';
+            attemptsRemaining.style.display = 'none';
+            submit.textContent = 'Play again';
+            randomNumber = Math.floor(Math.random() * 100 + 1);
+            input.value = '';
+        }
+    </script>
+</body>
+</html>

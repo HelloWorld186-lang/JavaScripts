@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async :- settimeout , settimeinterval , fetch</title>
+</head>
+<body>
+
+    <p></p>
+    <button>Stop</button>
+
+    <script>
+        //settimeout 
+        //settimeout(handeler (callback function(function without name) or refrence for any function) , time after which the fucntion is gone to run)
+        //cleartimeout //stop the settimeout //formate cleartimeout(refernce for the set time out which i wnat to stop)
+
+        //setinterval 
+        //setinterval(handeler , interval time for the funcntion to run (funtion run infinite time))
+        //similar cleartimeinterval 
+
+        // simple setintervale
+
+        const p = document.querySelector('p');
+        const btn = document.querySelector('button')
+
+        let value = true;
+
+        function chnageInner(value) {
+            if (value == true) {
+                p.innerText = 'Hello';
+            } else {
+                p.innerText = 'World';
+            }
+        }
+
+        const refSetInterval = setInterval(function() { //this is the call back funtion (without name) //ref of call back function not include any type of input
+            value = !value;
+            chnageInner(value);
+        }, 100);  
+
+        btn.addEventListener('click' , function(){
+            clearInterval(refSetInterval)
+        })
+
+        // similar for the settimeout 
+    </script>
+    
+</body>
+</html>

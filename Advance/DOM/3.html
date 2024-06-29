@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making element and add element</title>
+</head>
+<body style="background-color: rgb(63, 63, 63); color: lightblue;">
+    
+    <script>
+        const div = document.createElement('div')
+        console.log(div)
+        //this is best in place of div.classname = 'mainClass' //in this first take the refrence then replace by the new ones //but here it directly replace 
+        div.setAttribute('class' , 'mainClass')
+        div.setAttribute('id' , 'mainId')
+
+        div.style.backgroundColor = 'red'
+        div.style.padding = '12px'
+
+        //this is worng or slow div.innerText = 'Ayush' //same reason as above discuss 
+
+        //this is the best way 
+        const addText = document.createTextNode('Ayush')
+        div.appendChild(addText)
+
+        document.body.appendChild(div)
+
+    </script>
+</body>
+</html>

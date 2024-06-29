@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Background Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Corrected box-sizing value */
+        }
+
+        body {
+            display: flex; /* Added missing display property */
+            justify-content: center; /* Corrected syntax with colons and added semicolons */
+            align-items: center;
+            height: 100vh; /* Corrected full height value */
+            width: 100vw; /* Corrected full width value */
+            background: #000;
+        }
+
+        #generateBtn {
+            background: transparent;
+            padding: 20px;
+            padding-top: 32px;
+            padding-bottom: 32px;
+            display: flex; /* Added missing display property */
+            justify-content: center; /* Corrected syntax with colons and added semicolons */
+            align-items: center;
+            font-weight: bold; /* Corrected font-weight property */
+            font-size: large; /* Corrected font-size property */
+            outline: 2px solid white; /* Corrected outline property */
+            outline-offset: 5px; /* Corrected outline-offset property */
+            border: 2px solid white; /* Corrected border property */
+            color: white; /* Added color for text to make it visible */
+            cursor: pointer; /* Added cursor pointer for better UX */
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <button id="generateBtn">Start!</button>
+    <script>
+        let startStop = false; // true = start, false = stop
+        const btn = document.querySelector('#generateBtn');
+        const body = document.querySelector('body');
+
+        function bgChanger() {
+            let colorRange = '0123456789ABCDEF';
+            let colorCode = '#';
+            for (let i = 0; i < 6; i++) {
+                colorCode += colorRange[Math.floor(Math.random() * 16)];
+            }
+            body.style.backgroundColor = colorCode;
+        }
+
+        let refInterval;
+
+        function startFunc() {
+            refInterval = setInterval(bgChanger, 100);
+        }
+
+        function stopFunc() {
+            clearInterval(refInterval);
+        }
+
+        btn.addEventListener('click', function() {
+            if (startStop) { // Start
+                btn.innerHTML = 'Stop!';
+                startFunc();
+            } else { // Stop
+                btn.innerHTML = 'Start!';
+                stopFunc();
+            }
+            startStop = !startStop;
+        });
+    </script>
+</body>
+</html>

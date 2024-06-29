@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study about bind</title>
+    <!-- Bind is use to bind the context with the fuction call -->
+</head>
+<body>
+
+    <button>Click</button>
+
+    <script>
+
+        //give the code for the class //when click this give all the varibale value 
+        class Bind{
+            constructor(){
+                this.serverError = '404'
+                // document.querySelector('button').addEventListener('click' , this.hadelError)//'this' will give refrence of the button , because hadelError is in the refrence of the btn 
+                document.querySelector('button').addEventListener('click' , this.hadelError.bind(this)) //now 'this will give the refrence of the class not the button '
+            }
+            //methode 
+            hadelError(){
+                console.log(this) //'this' will give refrence of the button hadelError is in the refrence of the btn 
+                // console.log(this) //now 'this will give the refrence of the class not the button '
+            }
+        }
+
+        const bindObj = new Bind()
+
+    </script>
+    
+</body>
+</html>

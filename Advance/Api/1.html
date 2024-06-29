@@ -1,0 +1,232 @@
+<!-- convert the code into json using json formater  -->
+<!-- here firts use the xml's request for getting the data from the api  -->
+
+<!-- I this i learn how to get the data using the xml https requets -->
+
+<!-- Whole website is gone to made using the xml https request (xhr)  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub User Info</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #58a6ff;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #30363d;
+            border-radius: 5px;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #238636;
+            color: #ffffff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2ea043;
+        }
+
+        .user-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .user-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .user-card h2 {
+            color: #58a6ff;
+            margin: 10px 0;
+        }
+
+        .user-card p {
+            margin: 10px 0;
+        }
+
+        .user-card a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .user-card a:hover {
+            text-decoration: underline;
+        }
+
+        #msg {
+            color: #58a6ff;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            input[type="text"] {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GitHub User Info</h1>
+        <form id="user-form">
+            <div class="input-container">
+                <input type="text" id="username" placeholder="Enter GitHub username" />
+                <button type="submit">Get User Info</button>
+            </div>
+        </form>
+        <div id="msg"></div>
+        <div id="user-card" class="user-card">
+            <img id="avatar" src="" alt="User Avatar">
+            <h2 id="name"></h2>
+            <p id="bio"></p>
+            <ul style="list-style: none;text-align: left;">
+                <li><strong>Login:</strong> <span id="login"></span></li>
+                <li><strong>ID:</strong> <span id="id"></span></li>
+                <li><strong>Email:</strong> <span id="email"></span></li>
+                <li><strong>Location:</strong> <span id="location"></span></li>
+                <li><strong>Company:</strong> <span id="company"></span></li>
+                <li><strong>Blog:</strong> <a id="blog" href="" target="_blank"></a></li>
+                <li><strong>Twitter:</strong> <a id="twitter" href="" target="_blank"></a></li>
+                <li><strong>Public Repos:</strong> <span id="public_repos"></span></li>
+                <li><strong>Public Gists:</strong> <span id="public_gists"></span></li>
+                <li><strong>Followers:</strong> <span id="followers"></span></li>
+                <li><strong>Following:</strong> <span id="following"></span></li>
+                <li><strong>GitHub:</strong> <a id="html_url" href="" target="_blank"></a></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('#user-form');
+            const input = document.querySelector('#username');
+            const msg = document.querySelector('#msg');
+            const userCard = document.querySelector('#user-card');
+
+            const avatar = document.querySelector('#avatar');
+            const name = document.querySelector('#name');
+            const bio = document.querySelector('#bio');
+            const login = document.querySelector('#login');
+            const id = document.querySelector('#id');
+            const email = document.querySelector('#email');
+            const location = document.querySelector('#location');
+            const company = document.querySelector('#company');
+            const blog = document.querySelector('#blog');
+            const twitter = document.querySelector('#twitter');
+            const public_repos = document.querySelector('#public_repos');
+            const public_gists = document.querySelector('#public_gists');
+            const followers = document.querySelector('#followers');
+            const following = document.querySelector('#following');
+            const html_url = document.querySelector('#html_url');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const inputValue = input.value.trim();
+                if (inputValue) {
+                    getData(inputValue);
+                }
+            });
+
+            function getData(username) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `https://api.github.com/users/${username}`, true);
+                xhr.responseType = 'json';
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const response = xhr.response;
+                            displayUserInfo(response);
+                        } else {
+                            showError('User not found');
+                        }
+                    }
+                };
+                xhr.onprogress = function() {
+                    msg.textContent = 'Loading...';
+                };
+                xhr.onloadend = function() {
+                    msg.textContent = '';
+                };
+                xhr.send();
+            }
+
+            function displayUserInfo(user) {
+                userCard.style.display = 'block';
+                avatar.src = user.avatar_url || '';
+                name.textContent = user.name || 'No name provided';
+                bio.textContent = user.bio || 'No bio available';
+                login.textContent = user.login || 'N/A';
+                id.textContent = user.id || 'N/A';
+                email.textContent = user.email || 'N/A';
+                location.textContent = user.location || 'N/A';
+                company.textContent = user.company || 'N/A';
+                blog.textContent = 'Link' || 'N/A';
+                blog.href = user.blog || '#';
+                twitter.textContent = user.twitter_username || 'N/A';
+                twitter.href = user.twitter_username ? `https://twitter.com/${user.twitter_username}` : '#';
+                public_repos.textContent = user.public_repos || 'N/A';
+                public_gists.textContent = user.public_gists || 'N/A';
+                followers.textContent = user.followers || 'N/A';
+                following.textContent = user.following || 'N/A';
+                html_url.href = user.html_url || '#';
+                html_url.textContent = 'Link' || 'N/A';
+            }
+
+            function showError(message) {
+                msg.textContent = message;
+                userCard.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

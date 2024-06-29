@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make and adding element</title>
+</head>
+<body>
+
+    <ul class="unorderList"></ul>
+
+    <script>
+        //ADD
+        //disscuss in previouse
+        //this is not the best way because in this , we have to traverse the whole tree when we use '.'
+        function addList (text){
+            const li = document.createElement('li')
+            li.innerHTML = `${text}`
+            const ul = document.querySelector('.unorderList')
+            ul.appendChild(li)
+        }
+        //use this to not to traverse the whole tree 
+        function addListOptimise (text){
+            const li = document.createElement('li')
+            const textcontent = document.createTextNode(text)
+            li.appendChild(textcontent)
+            const ul = document.querySelector('.unorderList')
+            ul.appendChild(li)
+        }
+        addList('zero')
+        addList('zero')
+        addListOptimise('yo hello i am very happy to glade to meet you')
+
+        //EDIT 
+        const secondList = document.querySelector('li:nth-child(2)');
+        //worst way 
+        secondList.textContent = 'Hello';
+        //best way
+        const li = document.createElement('li')
+        const textcontent = document.createTextNode('Hello')
+        li.appendChild(textcontent)
+        secondList.replaceWith(li)
+
+        //note like innerhtml there is outerhtml //in innerhtml only include all the inner text either it is text or html //in the outerhtml it also include the outer html 
+
+        //remove
+        const firstList = document.querySelector('li:last-child');
+        firstList.parentNode.removeChild(firstList);
+    </script>
+    
+</body>
+</html>
